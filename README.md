@@ -43,13 +43,11 @@ Some notes on the sensors:
 
 Next steps are to attach the board to some scope (most likely 10" DOB) and try it under stars.
 
- 
+
 
 Feel free to try and let me know if you have any questions
 
- 
 
-Alex
 
  
 

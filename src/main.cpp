@@ -7,7 +7,7 @@ Sensor * sensor = NULL;
 
 WiFiServer server(4030);                      // 4030 is the default port Skysafari uses for WiFi connection to telescopes
 WiFiClient remoteClient;                      // represents the connection to the remote app (Skysafari)
-#define WiFi_Access_Point_Name "TelescopeDSC" // Name of the WiFi access point this device will create for your tablet/phone to connect to.
+#define WiFi_Access_Point_Name "DSC" // Name of the WiFi access point this device will create for your tablet/phone to connect to.
 
 #define STEPS_IN_FULL_CIRCLE 36000
 

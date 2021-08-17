@@ -51,7 +51,8 @@ Coordinates SensorBNO055::getCoordinates()
     imu::Quaternion quat = bno.getQuat();
     imu::Vector<3> ori = quat.toEuler();
 
-    Serial.printf("X:%f Y:%f Z:%f",  ori.x(), ori.y(), ori.z());
+    Serial.printf("Raw Sensor Data: X:%f Y:%f Z:%f",  ori.x(), ori.y(), ori.z());
+    Serial.println();
 
     return Coordinates(ori.z()*180/PI*100,  -ori.x()*180/PI*100);
 }

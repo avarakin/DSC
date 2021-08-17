@@ -43,7 +43,6 @@ void attendTcpRequests()
     // check for new or lost connections:
     if (server.hasClient())
     {
-        Serial.println("hasClient!");
         if (!remoteClient || !remoteClient.connected())
         {
             if (remoteClient)
@@ -52,9 +51,6 @@ void attendTcpRequests()
                 remoteClient.stop();
             }
             remoteClient = server.available();
-            //Serial.print("Inbound connection from: ");
-            //Serial.println(remoteClient.remoteIP());
-            //  remoteClient.flush();
             remoteClient.setNoDelay(true);
         }
     }
@@ -72,6 +68,8 @@ void attendTcpRequests()
             Coordinates coord = sensor->getCoordinates();
 
             sprintf(encoderResponse, "%i\t%i\t\n", coord.getAz(), coord.getAlt());
+            
+            Serial.printf("Sending to Skysafari: ");
             Serial.println(encoderResponse);
 
             remoteClient.println(encoderResponse);

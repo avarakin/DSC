@@ -3,13 +3,13 @@
 #PATH := /usr/local/bin:$(PATH)
 
 all:
-		platformio -f -c vim run
+		platformio  run
 
 upload:
-		platformio -f -c vim run --target upload
+		platformio  run --target upload
 
 clean:
-		platformio -f -c vim run --target clean
+		platformio  run --target clean
 
 update:
-		platformio -f -c vim update
+		platformio  update

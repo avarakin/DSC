@@ -10,11 +10,13 @@
 /* Set the delay between fresh samples */
 #define BNO055_SAMPLERATE_DELAY_MS (100)
 
+const adafruit_bno055_offsets_t oldCalib = {-68, -14, -48, -201, 275, 100, 1, -1, -1, 1000, 480};
 
 void SensorBNO055::init()
 {
    bno = Adafruit_BNO055(55);
 
+  Serial.println("Orientation Sensor Test"); Serial.println("");
 
   /* Initialise the sensor as relative mode (mag is not used) */
   if(!bno.begin(Adafruit_BNO055::OPERATION_MODE_IMUPLUS))
@@ -26,6 +28,9 @@ void SensorBNO055::init()
 
   delay(1000);
 
+  Serial.println("\n\nRestoring Calibration data to the BNO055...");
+  bno.setSensorOffsets(oldCalib);
+
   /* Use external crystal for better accuracy */
   bno.setExtCrystalUse(true);
 
@@ -36,6 +41,8 @@ void SensorBNO055::init()
   while (!fullyCalibrated_imu()) {
     delay(BNO055_SAMPLERATE_DELAY_MS);
   }
+
+
 }
 
 

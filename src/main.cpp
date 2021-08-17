@@ -3,10 +3,10 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 
-Sensor * sensor = NULL;
+Sensor *sensor = NULL;
 
-WiFiServer server(4030);                      // 4030 is the default port Skysafari uses for WiFi connection to telescopes
-WiFiClient remoteClient;                      // represents the connection to the remote app (Skysafari)
+WiFiServer server(4030);             // 4030 is the default port Skysafari uses for WiFi connection to telescopes
+WiFiClient remoteClient;             // represents the connection to the remote app (Skysafari)
 #define WiFi_Access_Point_Name "DSC" // Name of the WiFi access point this device will create for your tablet/phone to connect to.
 
 #define STEPS_IN_FULL_CIRCLE 36000
@@ -17,12 +17,10 @@ void setup()
 
     Serial.println("Starting up");
 
-
     sensor = new SensorBNO055();
     sensor->init();
 
     Serial.println("Sensor init done");
-
 
     WiFi.mode(WIFI_AP);
     IPAddress ip(1, 2, 3, 4); // The "telescope IP address" that Skysafari should connect to is 1.2.3.4 which is easy to remember.
@@ -31,11 +29,11 @@ void setup()
     WiFi.softAPConfig(ip, gateway, subnet);
     WiFi.softAP(WiFi_Access_Point_Name);
     IPAddress myIP = WiFi.softAPIP();
-    
+
     server.begin();
     server.setNoDelay(true);
 
-    Serial.println("Wifi init done");    
+    Serial.println("Wifi init done");
 }
 
 void attendTcpRequests()
@@ -68,7 +66,7 @@ void attendTcpRequests()
             Coordinates coord = sensor->getCoordinates();
 
             sprintf(encoderResponse, "%i\t%i\t\n", coord.getAz(), coord.getAlt());
-            
+
             Serial.printf("Sending to Skysafari: ");
             Serial.println(encoderResponse);
 

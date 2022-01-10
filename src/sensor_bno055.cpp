@@ -53,7 +53,13 @@ Coordinates SensorBNO055::getCoordinates()
   Serial.printf("Raw Sensor Data: X:%f Y:%f Z:%f", ori.x(), ori.y(), ori.z());
   Serial.println();
 
-  return Coordinates(ori.z() * 180 / PI * 100, -ori.x() * 180 / PI * 100);
+
+  //Use this for the sensor laying down flat when the scope points to the horizon
+  //return Coordinates(ori.z() * 180 / PI * 100, -ori.x() * 180 / PI * 100);
+
+  //Use this for the sensor laying down on longer edge when the scope points to the horizon
+  return Coordinates(ori.y() * 180 / PI * 100, -ori.x() * 180 / PI * 100);
+
 }
 
 /* Check whether it is fullycalibrated for IMU mode (mag is not used)*/

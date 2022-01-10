@@ -5,6 +5,8 @@
 
 Sensor *sensor = NULL;
 
+#define TEST
+
 WiFiServer server(4030);             // 4030 is the default port Skysafari uses for WiFi connection to telescopes
 WiFiClient remoteClient;             // represents the connection to the remote app (Skysafari)
 #define WiFi_Access_Point_Name "DSC" // Name of the WiFi access point this device will create for your tablet/phone to connect to.
@@ -13,7 +15,8 @@ WiFiClient remoteClient;             // represents the connection to the remote 
 
 void setup()
 {
-    Serial.begin(115200);
+//    Serial.begin(115200);
+    Serial.begin(9600);
 
     Serial.println("Starting up");
 
@@ -21,6 +24,8 @@ void setup()
     sensor->init();
 
     Serial.println("Sensor init done");
+
+#ifndef TEST
 
     WiFi.mode(WIFI_AP);
     IPAddress ip(1, 2, 3, 4); // The "telescope IP address" that Skysafari should connect to is 1.2.3.4 which is easy to remember.
@@ -34,6 +39,7 @@ void setup()
     server.setNoDelay(true);
 
     Serial.println("Wifi init done");
+#endif
 }
 
 void attendTcpRequests()
@@ -91,6 +97,16 @@ void attendTcpRequests()
 
 void loop()
 {
+#ifdef TEST
+    char encoderResponse[20];
+    Coordinates coord = sensor->getCoordinates();
+    sprintf(encoderResponse, "%i\t%i\t\n", coord.getAz(), coord.getAlt());
+    Serial.println(encoderResponse);
+    delay(1000);
+
+#elif
     attendTcpRequests(); // gets priority to prevent timeouts on Skysafari. Measured AVG execution time = 18ms
     yield();
+#endif
+
 }

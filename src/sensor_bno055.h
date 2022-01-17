@@ -7,8 +7,5 @@ public:
     virtual Coordinates getCoordinates();
 
 protected:
-    void displaySensorDetails(void);
-    bool fullyCalibrated_imu(void);
-
     Adafruit_BNO055 bno;
 };
